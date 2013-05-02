@@ -260,6 +260,30 @@ public class ProcessingRandomWalk extends PApplet {
     }
   }
 
+  /** A coordinated random walk on the red and green axes of color space.
+  */
+  public class RGBWalk implements ColorSpace {
+    int m_color = color( 127, 127, 127 );
+
+    public int mutate() {
+      switch ( m_rand.nextInt(3) ) {
+        case 0:
+          m_color = perturbColor( m_color, 1, 0, 0 );
+          break;
+        case 1:
+          m_color = perturbColor( m_color, 0, 1, 0 );
+          break;
+        case 2:
+          m_color = perturbColor( m_color, 0, 0, 1 );
+          break;
+        default:
+          break;
+      }
+
+      return m_color;
+    }
+  }
+
   //===========================================================
   //======== PROCESSING INTERNALS AND CLASS FUNCTIONS =========
   //===========================================================
@@ -277,9 +301,11 @@ public class ProcessingRandomWalk extends PApplet {
     m_draw = new ArrayList<Drawable>();
 
     // RGB blending walkers that start walking in the center of the screen
-    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RWalk(), .3f ) );
-    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new GWalk(), .15f ) );
-    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new BWalk(), .3f ) );
+    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RGBWalk(), .3f ) );
+    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RGBWalk(), .3f ) );
+//    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RWalk(), .3f ) );
+//    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new GWalk(), .15f ) );
+//    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new BWalk(), .3f ) );
   }
 
   // this is called every frame
@@ -324,7 +350,7 @@ public class ProcessingRandomWalk extends PApplet {
    */
   public int mod( int n, int mod ) {
     int z = n % mod;
-    return z + ( z < 0 
+    return z + ( z < 0 ? mod : 0 );
   }
 
   /** Perturbs the input color c by [-.Fac, .Fac] in the corresponding color.

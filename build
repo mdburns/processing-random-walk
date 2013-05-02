@@ -1,0 +1,9 @@
+#!/bin/sh
+
+javac -cp .:lib/core.jar *.java
+
+if [ ! -d derived ]; then
+  mkdir derived
+fi
+
+mv *.class derived/
