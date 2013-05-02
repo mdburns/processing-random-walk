@@ -260,7 +260,7 @@ public class ProcessingRandomWalk extends PApplet {
     }
   }
 
-  /** A coordinated random walk on the red and green axes of color space.
+  /** A random walk of one over a random axis of color space at each step.
   */
   public class RGBWalk implements ColorSpace {
     int m_color = color( 127, 127, 127 );
