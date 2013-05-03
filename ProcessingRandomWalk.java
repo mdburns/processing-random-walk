@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 public class ProcessingRandomWalk extends PApplet {
   final static int SIDE = 1024;
-  final static int UPDATES_PER_FRAME = 150;
+  final static int UPDATES_PER_FRAME = 750;
   final static int X_WALK = 1;
   final static int Y_WALK = 1;
 
@@ -302,7 +302,7 @@ public class ProcessingRandomWalk extends PApplet {
 
     // RGB blending walkers that start walking in the center of the screen
     m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RGBWalk(), .3f ) );
-    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RGBWalk(), .3f ) );
+//    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RGBWalk(), .3f ) );
 //    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new RWalk(), .3f ) );
 //    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new GWalk(), .15f ) );
 //    m_draw.add( new BlendingWalker( new PVector( SIDE / 2, SIDE / 2 ), new BWalk(), .3f ) );
@@ -325,6 +325,22 @@ public class ProcessingRandomWalk extends PApplet {
     // draw everything in the draw list
     for ( Drawable d : m_draw )
       d.draw();
+  }
+
+  // save the current canvas when 's' is pressed, clear when c is pressed.
+  public void keyPressed() {
+    switch ( key ) {
+      case 'c':
+        background( 0 );
+        break;
+      case 's':
+        save( System.currentTimeMillis() + ".png" );
+        break;
+      case 'q':
+        System.exit( 0 );
+      default:
+        break;
+    }
   }
 
   /** Returns a uniformly-distributed random number on the interval [ -r, r ].

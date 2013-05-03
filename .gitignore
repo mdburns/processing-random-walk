@@ -1,7 +1,2 @@
 *.class
 derived/
-
-# Package Files #
-*.jar
-*.war
-*.ear
